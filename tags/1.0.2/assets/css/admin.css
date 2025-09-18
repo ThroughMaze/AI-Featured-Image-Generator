@@ -1,0 +1,89 @@
+.aifi-meta-box {
+    padding: 12px;
+}
+
+.aifi-meta-box p {
+    margin: 0 0 12px;
+}
+
+.aifi-meta-box label {
+    display: block;
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+.aifi-meta-box input[type="text"],
+.aifi-meta-box select {
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+.aifi-actions {
+    display: flex;
+    align-items: center;
+    margin: 12px 0;
+}
+
+.aifi-actions .spinner {
+    float: none;
+    margin: 0 0 0 8px;
+}
+
+.aifi-preview {
+    margin: 12px 0;
+    text-align: center;
+}
+
+.aifi-preview img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.aifi-message {
+    margin: 12px 0;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+.aifi-message.success {
+    background-color: #dff0d8;
+    border: 1px solid #d6e9c6;
+    color: #3c763d;
+}
+
+.aifi-message.error {
+    background-color: #f2dede;
+    border: 1px solid #ebccd1;
+    color: #a94442;
+}
+
+.aifi-error {
+    color: #dc3232;
+    font-weight: 600;
+}
+
+/* Settings page styles */
+.aifi-settings-section {
+    margin: 20px 0;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+}
+
+.aifi-settings-section h2 {
+    margin-top: 0;
+}
+
+.aifi-settings-section .form-table th {
+    width: 200px;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 782px) {
+    .aifi-settings-section .form-table th {
+        width: auto;
+    }
+} 

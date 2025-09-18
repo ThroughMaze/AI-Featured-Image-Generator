@@ -1,0 +1,127 @@
+<?php
+namespace AIFI;
+
+/**
+ * Handles REST API endpoints for AI image generation.
+ *
+ * @package AIFI
+ */
+class REST {
+    /**
+     * Initialize REST API.
+     */
+    public function __construct() {
+        add_action('rest_api_init', array($this, 'register_routes'));
+    }
+
+    /**
+     * Register REST API routes.
+     */
+    public function register_routes() {
+        register_rest_route('aifi/v1', '/generate', array(
+            'methods' => 'POST',
+            'callback' => array($this, 'generate_image'),
+            'permission_callback' => array($this, 'check_permission'),
+            'args' => array(
+                'post_id' => array(
+                    'required' => true,
+                    'type' => 'integer',
+                    'sanitize_callback' => 'absint'
+                ),
+                'title' => array(
+                    'required' => false,
+                    'type' => 'string',
+                    'sanitize_callback' => 'sanitize_text_field'
+                ),
+                'prompt' => array(
+                    'required' => false,
+                    'type' => 'string',
+                    'sanitize_callback' => 'sanitize_text_field'
+                ),
+                'style' => array(
+                    'required' => false,
+                    'type' => 'string',
+                    'sanitize_callback' => 'sanitize_text_field'
+                )
+            )
+        ));
+    }
+
+    /**
+     * Check if user has permission to generate images.
+     *
+     * @param \WP_REST_Request $request Request object.
+     * @return bool|\WP_Error
+     */
+    public function check_permission($request) {
+        if (!current_user_can('edit_post', $request['post_id'])) {
+            return new \WP_Error(
+                'rest_forbidden',
+                __('Sorry, you are not allowed to generate images for this post.', 'ai-featured-image-generator'),
+                array('status' => rest_authorization_required_code())
+            );
+        }
+
+        if (!wp_verify_nonce($request->get_header('X-WP-Nonce'), 'wp_rest')) {
+            return new \WP_Error(
+                'rest_forbidden',
+                __('Invalid nonce.', 'ai-featured-image-generator'),
+                array('status' => rest_authorization_required_code())
+            );
+        }
+
+        return true;
+    }
+
+    /**
+     * Generate image via REST API.
+     *
+     * @param \WP_REST_Request $request Request object.
+     * @return \WP_REST_Response|\WP_Error
+     */
+    public function generate_image($request) {
+        $post_id = $request['post_id'];
+        $title = $request['title'];
+        $prompt = $request['prompt'];
+        $style = $request['style'];
+
+        // Check for transient lock
+        $lock_key = 'aifi_lock_' . $post_id;
+        if (get_transient($lock_key)) {
+            return new \WP_Error(
+                'rest_forbidden',
+                __('Please wait a moment before generating another image.', 'ai-featured-image-generator'),
+                array('status' => 429)
+            );
+        }
+
+        // Set transient lock (5 seconds)
+        set_transient($lock_key, true, 5);
+
+        // Get settings
+        $settings = new Settings();
+        $settings_data = $settings->get_settings();
+
+        if (empty($settings_data['api_key'])) {
+            return new \WP_Error(
+                'rest_forbidden',
+                __('API key not configured.', 'ai-featured-image-generator'),
+                array('status' => 400)
+            );
+        }
+
+        // Generate image
+        $generator = new Generator($settings);
+        $result = $generator->generate_image($post_id, $prompt, $style, $title);
+
+        if (is_wp_error($result)) {
+            return $result;
+        }
+
+        return rest_ensure_response(array(
+            'success' => true,
+            'attachment_id' => $result,
+            'url' => wp_get_attachment_url($result)
+        ));
+    }
+} 

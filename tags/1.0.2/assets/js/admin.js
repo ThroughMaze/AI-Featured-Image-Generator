@@ -1,0 +1,104 @@
+(function($) {
+    'use strict';
+
+    // Cache DOM elements
+    const $generateButton = $('#aifi-generate');
+    const $promptInput = $('#aifi-prompt');
+    const $styleSelect = $('#aifi-style');
+    const $preview = $('#aifi-preview');
+    const $message = $('#aifi-message');
+    const $spinner = $('.aifi-actions .spinner');
+
+    // Handle generate button click
+    $generateButton.on('click', function(e) {
+        e.preventDefault();
+
+        // Reset UI
+        $preview.hide();
+        $message.hide().removeClass('success error');
+        $generateButton.prop('disabled', true);
+        $spinner.addClass('is-active');
+
+        // Get post ID from the page
+        const postId = $('#post_ID').val();
+        const postTitle = $('h1:nth(1)').text().replace("· Post","");
+
+        // Prepare request data
+        const data = {
+            post_id: postId,
+            title: postTitle,
+            prompt: $promptInput.val(),
+            style: $styleSelect.val()
+        };
+
+        // Make API request
+        $.ajax({
+            url: aifiData.restUrl,
+            method: 'POST',
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('X-WP-Nonce', aifiData.nonce);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+            },
+            data: JSON.stringify(data),
+            processData: false,
+            success: function(response) {
+                if (response.success) {
+                    // Show success message
+                    $message
+                        .addClass('success')
+                        .text(aifiData.i18n.success)
+                        .show();
+
+                    // Show preview
+                    $preview
+                        .find('img')
+                        .attr('src', response.url)
+                        .end()
+                        .show();
+
+                    // Update featured image in the editor
+                    if (wp.media && wp.media.featuredImage) {
+                        wp.media.featuredImage.set(response.attachment_id);
+                    }
+                } else {
+                    showError(response.message || aifiData.i18n.error);
+                }
+            },
+            error: function(xhr) {
+                let message = aifiData.i18n.error;
+                
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    message = xhr.responseJSON.message;
+                }
+
+                showError(message);
+            },
+            complete: function() {
+                $generateButton.prop('disabled', false);
+                $spinner.removeClass('is-active');
+            }
+        });
+    });
+
+    /**
+     * Show error message.
+     *
+     * @param {string} message Error message to display.
+     */
+    function showError(message) {
+        $message
+            .addClass('error')
+            .text(message)
+            .show();
+    }
+
+    // Handle prompt input changes
+    $promptInput.on('input', function() {
+        if ($(this).val().length > 0) {
+            $generateButton.prop('disabled', false);
+        } else {
+            $generateButton.prop('disabled', false);
+        }
+    });
+
+})(jQuery); 

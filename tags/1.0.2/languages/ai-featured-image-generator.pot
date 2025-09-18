@@ -1,0 +1,149 @@
+# Copyright (C) 2024 Your Name
+# This file is distributed under the same license as the AI Featured Image Generator plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: AI Featured Image Generator 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ai-featured-image-generator\n"
+"POT-Creation-Date: 2024-01-01T00:00:00+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2024-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: inc/class-meta-box.php:42
+msgid "AI Featured Image Generator"
+msgstr ""
+
+#: inc/class-meta-box.php:89
+msgid "Custom Prompt (optional):"
+msgstr ""
+
+#: inc/class-meta-box.php:93
+msgid "Add details to your image prompt..."
+msgstr ""
+
+#: inc/class-meta-box.php:98
+msgid "Style:"
+msgstr ""
+
+#: inc/class-meta-box.php:102
+msgid "Realistic"
+msgstr ""
+
+#: inc/class-meta-box.php:103
+msgid "Artistic"
+msgstr ""
+
+#: inc/class-meta-box.php:104
+msgid "Cartoon"
+msgstr ""
+
+#: inc/class-meta-box.php:105
+msgid "Sketch"
+msgstr ""
+
+#: inc/class-meta-box.php:111
+msgid "Generate Featured Image"
+msgstr ""
+
+#: inc/class-meta-box.php:117
+msgid "Generated image preview"
+msgstr ""
+
+#: inc/class-meta-box.php:71
+msgid "API key not configured."
+msgstr ""
+
+#: inc/class-meta-box.php:72
+msgid "Configure now"
+msgstr ""
+
+#: inc/class-plugin.php:89
+msgid "Settings"
+msgstr ""
+
+#: inc/class-rest.php:45
+msgid "Sorry, you are not allowed to generate images for this post."
+msgstr ""
+
+#: inc/class-rest.php:53
+msgid "Invalid nonce."
+msgstr ""
+
+#: inc/class-rest.php:77
+msgid "Please wait a moment before generating another image."
+msgstr ""
+
+#: inc/class-rest.php:89
+msgid "API key not configured."
+msgstr ""
+
+#: inc/class-generator.php:45
+msgid "Invalid post ID."
+msgstr ""
+
+#: inc/class-generator.php:89
+msgid "No image URL returned from API."
+msgstr ""
+
+#: inc/class-settings.php:42
+msgid "AI Featured Image Settings"
+msgstr ""
+
+#: inc/class-settings.php:43
+msgid "AI Featured Image"
+msgstr ""
+
+#: inc/class-settings.php:58
+msgid "API Settings"
+msgstr ""
+
+#: inc/class-settings.php:67
+msgid "API Key"
+msgstr ""
+
+#: inc/class-settings.php:76
+msgid "Default Image Size"
+msgstr ""
+
+#: inc/class-settings.php:85
+msgid "Default Style"
+msgstr ""
+
+#: inc/class-settings.php:94
+msgid "Max Generation Attempts"
+msgstr ""
+
+#: inc/class-settings.php:103
+msgid "Auto Generate"
+msgstr ""
+
+#: inc/class-settings.php:112
+msgid "Automatically generate featured image on first publish"
+msgstr ""
+
+#: inc/class-settings.php:127
+msgid "Configure your AI image generation settings below."
+msgstr ""
+
+#: inc/class-settings.php
+msgid "Allow text on generated image"
+msgstr ""
+
+#: inc/class-settings.php
+msgid "Allow text, captions, or words to appear in generated images"
+msgstr ""
+
+#: inc/class-settings.php
+msgid "If unchecked, the AI will be instructed to avoid adding any text, captions, or words in the image."
+msgstr ""
+
+#: inc/class-meta-box.php
+msgid "Text, captions, or words will be avoided in generated images (see plugin settings)."
+msgstr ""
+
+#: inc/class-meta-box.php
+msgid "Text, captions, or words may appear in generated images (see plugin settings)."
+msgstr "" 

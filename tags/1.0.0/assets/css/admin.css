@@ -1,0 +1,228 @@
+.aifi-meta-box {
+    padding: 16px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e1e5e9;
+}
+
+.aifi-meta-box p {
+    margin: 0 0 16px;
+    line-height: 1.5;
+}
+
+.aifi-meta-box label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #1d2327;
+    font-size: 13px;
+}
+
+.aifi-meta-box input[type="text"],
+.aifi-meta-box select,
+.aifi-meta-box textarea {
+    width: 100%;
+    margin-bottom: 16px;
+    border: 1px solid #8c8f94;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    box-sizing: border-box;
+}
+
+.aifi-meta-box input[type="text"]:focus,
+.aifi-meta-box select:focus,
+.aifi-meta-box textarea:focus {
+    border-color: #2271b1;
+    box-shadow: 0 0 0 1px #2271b1;
+    outline: none;
+}
+
+.aifi-meta-box textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+.aifi-actions {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    gap: 12px;
+}
+
+.aifi-actions .button {
+    flex: 1;
+    height: 40px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.aifi-actions .button-primary {
+    background: linear-gradient(135deg, #2271b1 0%, #135e96 100%);
+    border: none;
+    box-shadow: 0 2px 4px rgba(34, 113, 177, 0.3);
+}
+
+.aifi-actions .button-primary:hover {
+    background: linear-gradient(135deg, #135e96 0%, #0f4c75 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(34, 113, 177, 0.4);
+}
+
+.aifi-actions .spinner {
+    float: none;
+    margin: 0;
+    width: 20px;
+    height: 20px;
+}
+
+.aifi-preview {
+    margin: 20px 0;
+    text-align: center;
+    padding: 16px;
+    background: #fff;
+    border: 2px dashed #c3c4c7;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+}
+
+.aifi-preview:hover {
+    border-color: #2271b1;
+}
+
+.aifi-preview img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.aifi-preview img:hover {
+    transform: scale(1.02);
+}
+
+.aifi-message {
+    margin: 16px 0;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    border-left: 4px solid;
+}
+
+.aifi-message.success {
+    background-color: #d1e7dd;
+    border-left-color: #0f5132;
+    color: #0f5132;
+}
+
+.aifi-message.error {
+    background-color: #f8d7da;
+    border-left-color: #842029;
+    color: #842029;
+}
+
+.aifi-error {
+    color: #d63384;
+    font-weight: 600;
+    background: #f8d7da;
+    padding: 12px 16px;
+    border-radius: 6px;
+    border-left: 4px solid #d63384;
+    margin: 16px 0;
+}
+
+.aifi-meta-box .description {
+    font-size: 12px;
+    color: #646970;
+    font-style: italic;
+    margin-top: 4px;
+    line-height: 1.4;
+}
+
+/* Style notice for text settings */
+.aifi-meta-box p[style*="color:#666"] {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 6px;
+    padding: 12px;
+    margin: 16px 0;
+    color: #856404 !important;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+/* Settings page styles */
+.aifi-settings-section {
+    margin: 20px 0;
+    padding: 24px;
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+
+.aifi-settings-section h2 {
+    margin-top: 0;
+    color: #1d2327;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.aifi-settings-section .form-table th {
+    width: 200px;
+    font-weight: 600;
+    color: #1d2327;
+}
+
+.aifi-settings-section .form-table td {
+    padding: 15px 10px;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 782px) {
+    .aifi-settings-section .form-table th {
+        width: auto;
+    }
+    
+    .aifi-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .aifi-actions .button {
+        width: 100%;
+    }
+}
+
+/* Loading state */
+.aifi-actions .button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* Animation for success message */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.aifi-message {
+    animation: slideIn 0.3s ease-out;
+} 
+
+.postbox-header h2{
+    font-size: 13px !important;
+}
