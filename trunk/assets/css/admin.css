@@ -1,33 +1,79 @@
 .aifi-meta-box {
-    padding: 12px;
+    padding: 20px;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #e5e5e5;
 }
 
 .aifi-meta-box p {
-    margin: 0 0 12px;
+    margin: 0 0 16px;
+    line-height: 1.5;
 }
 
 .aifi-meta-box label {
     display: block;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
     font-weight: 600;
+    color: #1d2327;
+    font-size: 13px;
 }
 
 .aifi-meta-box input[type="text"],
+.aifi-meta-box textarea,
 .aifi-meta-box select {
     width: 100%;
-    margin-bottom: 12px;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: border-color 0.2s ease;
+}
+
+.aifi-meta-box input[type="text"]:focus,
+.aifi-meta-box textarea:focus,
+.aifi-meta-box select:focus {
+    border-color: #0073aa;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 115, 170, 0.1);
+}
+
+.aifi-meta-box select.widefat {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
 }
 
 .aifi-actions {
     display: flex;
     align-items: center;
-    margin: 12px 0;
+    margin: 20px 0;
     justify-content: center;
+    gap: 12px;
 }
 
 .aifi-actions .spinner {
     float: none;
     margin: 0 0 0 8px;
+}
+
+.aifi-meta-box .button-primary {
+    background: linear-gradient(135deg, #0073aa 0%, #005a87 100%);
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-weight: 600;
+    text-shadow: none;
+    box-shadow: 0 2px 4px rgba(0, 115, 170, 0.2);
+    transition: all 0.2s ease;
+}
+
+.aifi-meta-box .button-primary:hover {
+    background: linear-gradient(135deg, #005a87 0%, #004a73 100%);
+    box-shadow: 0 4px 8px rgba(0, 115, 170, 0.3);
+    transform: translateY(-1px);
 }
 
 .aifi-loading-spinner {
@@ -36,21 +82,28 @@
 }
 
 .aifi-preview {
-    margin: 12px 0;
+    margin: 20px 0;
     text-align: center;
+    background: #fff;
+    border-radius: 8px;
+    padding: 16px;
+    border: 1px solid #e5e5e5;
 }
 
 .aifi-preview img {
     max-width: 100%;
     height: auto;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .aifi-message {
-    margin: 12px 0;
-    padding: 8px 12px;
-    border-radius: 4px;
+    margin: 16px 0;
+    padding: 12px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 .aifi-message.success {
@@ -68,6 +121,18 @@
 .aifi-error {
     color: #dc3232;
     font-weight: 600;
+}
+
+/* Info text styling */
+.aifi-meta-box p em {
+    color: #666;
+    font-size: 12px;
+    background: #f0f0f1;
+    padding: 8px 12px;
+    border-radius: 4px;
+    display: block;
+    border-left: 3px solid #0073aa;
+    margin-bottom: 16px;
 }
 
 /* Settings page styles */
