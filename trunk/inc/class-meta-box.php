@@ -31,7 +31,7 @@ class Meta_Box {
             'aifi_meta_box',
             __('AI Featured Image Generator', 'ai-featured-image-generator'),
             array($this, 'render_meta_box'),
-            'post',
+            array('post', 'page'),
             'side',
             'high'
         );
@@ -43,7 +43,7 @@ class Meta_Box {
      * @param string $hook Current admin page.
      */
     public function enqueue_scripts($hook) {
-        if (!in_array($hook, array('post.php', 'post-new.php'))) {
+        if (!in_array($hook, array('post.php', 'post-new.php', 'page.php', 'page-new.php'))) {
             return;
         }
 
