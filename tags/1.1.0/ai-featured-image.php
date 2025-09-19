@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: AI Featured Image Generator
- * Description: Generate AI-powered featured images for your WordPress posts using AI image APIs.
+ * Description: Generate AI-powered featured images for your WordPress posts and pages using AI image APIs.
  * Version: 1.1.0
  * Author: Amr AI
  * Author URI: https://www.linkedin.com/in/amr-issa/
