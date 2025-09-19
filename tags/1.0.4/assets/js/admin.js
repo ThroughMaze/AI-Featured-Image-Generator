@@ -4,7 +4,6 @@
     // Cache DOM elements
     const $generateButton = $('#aifi-generate');
     const $promptInput = $('#aifi-prompt');
-    const $customTextInput = $('#aifi-custom-text');
     const $styleSelect = $('#aifi-style');
     const $preview = $('#aifi-preview');
     const $message = $('#aifi-message');
@@ -31,7 +30,6 @@
             post_id: postId,
             title: postTitle,
             prompt: $promptInput.val(),
-            custom_text: $customTextInput.val(),
             style: $styleSelect.val()
         };
 

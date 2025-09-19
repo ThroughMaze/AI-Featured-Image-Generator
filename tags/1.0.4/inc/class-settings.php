@@ -176,7 +176,6 @@ class Settings {
         $settings = $this->get_settings();
         $style = isset($settings['default_style']) ? $settings['default_style'] : 'realistic';
         $styles = array(
-            'none' => __('None (No Style)', 'ai-featured-image-generator'),
             'realistic' => __('Realistic', 'ai-featured-image-generator'),
             'artistic' => __('Artistic', 'ai-featured-image-generator'),
             'cartoon' => __('Cartoon', 'ai-featured-image-generator'),
@@ -212,7 +211,7 @@ class Settings {
             <input type="checkbox" name="<?php echo esc_attr($this->option); ?>[allow_text]" value="1" <?php checked($allow_text, true); ?>>
             <?php esc_html_e('Allow text, captions, or words to appear in generated images', 'ai-featured-image-generator'); ?>
         </label>
-        <p class="description"><?php esc_html_e('If checked, the AI will be instructed to add the specified text to the image. If unchecked, the AI will avoid adding any text, captions, or words.', 'ai-featured-image-generator'); ?></p>
+        <p class="description"><?php esc_html_e('If unchecked, the AI will be instructed to avoid adding any text, captions, or words in the image.', 'ai-featured-image-generator'); ?></p>
         <?php
     }
 

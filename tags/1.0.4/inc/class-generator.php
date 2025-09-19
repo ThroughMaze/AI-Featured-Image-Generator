@@ -1,0 +1,271 @@
+<?php
+namespace AIFI;
+
+/**
+ * Handles AI image generation and media library integration.
+ *
+ * @package AIFI
+ */
+class Generator {
+    /**
+     * Settings instance.
+     *
+     * @var Settings
+     */
+    private $settings;
+
+    /**
+     * Initialize generator.
+     */
+    public function __construct($settings) {
+        $this->settings = $settings;
+    }
+
+    /**
+     * Generate image for a post.
+     *
+     * @param int    $post_id Post ID.
+     * @param string $prompt  Optional custom prompt.
+     * @param string $style   Optional style override.
+     * @param string $title   Optional custom title.
+     * @return int|\WP_Error Attachment ID on success, WP_Error on failure.
+     */
+    public function generate_image($post_id, $prompt = '', $style = '', $title = '') {
+        $settings = $this->settings->get_settings();
+        $post = get_post($post_id);
+
+        if (!$post) {
+            return new \WP_Error(
+                'invalid_post',
+                __('Invalid post ID.', 'ai-featured-image-generator')
+            );
+        }
+
+        // Build prompt
+        $base_prompt = !empty($title) ? $title : $post->post_title;
+        if (!empty($prompt)) {
+            $base_prompt .= ' - ' . $prompt;
+        }
+
+        // Apply style
+        $style = !empty($style) ? $style : $settings['default_style'];
+        $style_prompt = $this->get_style_prompt($style);
+        $final_prompt = $base_prompt . ' ' . $style_prompt;
+
+        // Handle allow_text setting
+        if (empty($settings['allow_text']) || $settings['allow_text'] === false) {
+            $final_prompt .= ' -- no text, no captions, no words, no letters, no writing';
+        }
+    
+        // Allow filtering the prompt
+        $final_prompt = apply_filters('aifi_build_prompt', $final_prompt, $post, $style);
+        
+        // Call AI API
+        $image_data = $this->call_ai_api($final_prompt, $settings);
+        if (is_wp_error($image_data)) {
+            return $image_data;
+        }
+
+        // Download and save image
+        $attachment_id = $this->save_image($image_data, $post_id);
+        if (is_wp_error($attachment_id)) {
+            return $attachment_id;
+        }
+
+        // Set as featured image
+        set_post_thumbnail($post_id, $attachment_id);
+
+        // Fire action hook
+        do_action('aifi_after_generate', $attachment_id, $post_id);
+
+        return $attachment_id;
+    }
+
+    /**
+     * Get style-specific prompt.
+     *
+     * @param string $style Style name.
+     * @return string
+     */
+    private function get_style_prompt($style) {
+        $styles = array(
+            'realistic' => 'in a realistic, photographic style',
+            'artistic' => 'in an artistic, painterly style',
+            'cartoon' => 'in a cartoon, animated style',
+            'sketch' => 'in a detailed sketch style',
+            'watercolor' => 'in a beautiful watercolor painting style',
+            '3d' => 'as a high-quality 3D render',
+            'pixel' => 'in retro pixel art style',
+            'cyberpunk' => 'in a vibrant cyberpunk style',
+            'fantasy' => 'in a magical fantasy art style',
+            'anime' => 'in detailed anime style',
+            'minimalist' => 'in a clean minimalist style',
+            'technicolor' => 'in vivid technicolor style'
+        );
+
+        return isset($styles[$style]) ? $styles[$style] : $styles['realistic'];
+    }
+
+    /**
+     * Call AI image generation API.
+     *
+     * @param string $prompt   Image prompt.
+     * @param array  $settings Plugin settings.
+     * @return string|\WP_Error Image data on success, WP_Error on failure.
+     */
+    private function call_ai_api($prompt, $settings) {
+        require_once(ABSPATH . 'wp-admin/includes/file.php');
+        
+        $api_url = 'https://api.openai.com/v1/images/generations';
+        $size = isset($settings['default_size']) ? $settings['default_size'] : '1024x1024';
+
+        $args = array(
+            'headers' => array(
+                'Authorization' => 'Bearer ' . $settings['api_key'],
+                'Content-Type' => 'application/json'
+            ),
+            'body' => json_encode(array(
+                'model' => 'gpt-image-1',
+                'prompt' => $prompt,
+                'n' => 1,
+                'size' => $size
+            )),
+            'timeout' => 240,
+            'httpversion' => '1.1',
+            'sslverify' => true,
+            'blocking' => true
+        );
+
+        // Allow filtering API request arguments
+        $args = apply_filters('aifi_api_request_args', $args);
+
+        $response = wp_remote_post($api_url, $args);
+
+        if (is_wp_error($response)) {
+            $error_message = $response->get_error_message();
+            
+            // Handle timeout specifically
+            if (strpos($error_message, 'timed out') !== false) {
+                // translators: %s: error message from API
+                return new \WP_Error(
+                    'api_timeout',
+                    __('The request timed out. The image generation is taking longer than expected. Please try again.', 'ai-featured-image-generator')
+                );
+            }
+            
+            // translators: %s: error message from API
+            return new \WP_Error(
+                'api_error',
+                sprintf(
+                    /* translators: %s: error message from API */
+                    __('API request failed: %s', 'ai-featured-image-generator'),
+                    $error_message
+                )
+            );
+        }
+
+        $response_code = wp_remote_retrieve_response_code($response);
+        $body = wp_remote_retrieve_body($response);
+
+        if ($response_code !== 200) {
+            $error_data = json_decode($body, true);
+            $error_message = isset($error_data['error']['message']) 
+                ? $error_data['error']['message'] 
+                : __('Unknown API error occurred.', 'ai-featured-image-generator');
+
+            // Replace safety system error message with a user-friendly one
+            if ($response_code === 400 && strpos($error_message, 'Request was rejected as a result of the safety system') !== false) {
+                $error_message = __('Request may contain content that is not allowed by the safety system', 'ai-featured-image-generator');
+                return new \WP_Error(
+                    'api_error',
+                    $error_message
+                );
+            }
+            
+            // translators: 1: HTTP status code, 2: error message from API
+            return new \WP_Error(
+                'api_error',
+                sprintf(
+                    /* translators: 1: HTTP status code, 2: error message from API */
+                    __('API error (HTTP %1$d): %2$s', 'ai-featured-image-generator'),
+                    $response_code,
+                    $error_message
+                )
+            );
+        }
+
+        // Parse the JSON response
+        $response_data = json_decode($body, true);
+        if (!isset($response_data['data'][0]['b64_json'])) {
+            return new \WP_Error(
+                'api_error',
+                __('No image data found in API response.', 'ai-featured-image-generator')
+            );
+        }
+
+        // Decode the base64 image data
+        $image_data = base64_decode($response_data['data'][0]['b64_json']);
+        if ($image_data === false) {
+            return new \WP_Error(
+                'api_error',
+                __('Failed to decode base64 image data.', 'ai-featured-image-generator')
+            );
+        }
+
+        // Save the image data to a temporary file
+        $temp_file = wp_tempnam('aifi-');
+        if (!$temp_file) {
+            return new \WP_Error(
+                'api_error',
+                __('Failed to create temporary file for image.', 'ai-featured-image-generator')
+            );
+        }
+
+        file_put_contents($temp_file, $image_data);
+
+        return $temp_file;
+    }
+
+    /**
+     * Save image to media library.
+     *
+     * @param string $image_data Image data or temporary file path.
+     * @param int    $post_id   Post ID.
+     * @return int|\WP_Error Attachment ID on success, WP_Error on failure.
+     */
+    private function save_image($image_data, $post_id) {
+        require_once(ABSPATH . 'wp-admin/includes/media.php');
+        require_once(ABSPATH . 'wp-admin/includes/file.php');
+        require_once(ABSPATH . 'wp-admin/includes/image.php');
+
+        // If we received a temporary file path, use it directly
+        if (file_exists($image_data)) {
+            $temp_file = $image_data;
+        } else {
+            // Download file to temp dir if we received a URL
+            $temp_file = download_url($image_data);
+            if (is_wp_error($temp_file)) {
+                return $temp_file;
+            }
+        }
+
+        $file_array = array(
+            'name' => 'ai-generated-' . $post_id . '.png',
+            'tmp_name' => $temp_file
+        );
+
+        // Move the temporary file into the uploads directory
+        $attachment_id = media_handle_sideload($file_array, $post_id);
+
+        // Clean up the temporary file
+        if (file_exists($temp_file)) {
+            wp_delete_file($temp_file);
+        }
+
+        if (is_wp_error($attachment_id)) {
+            return $attachment_id;
+        }
+
+        return $attachment_id;
+    }
+} 

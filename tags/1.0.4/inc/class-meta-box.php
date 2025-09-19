@@ -101,41 +101,23 @@ class Meta_Box {
         wp_nonce_field('aifi_meta_box', 'aifi_meta_box_nonce');
         ?>
         <div class="aifi-meta-box">
-            <!-- Info notice -->
-            <div class="aifi-info-notice">
-                <?php if (!$allow_text): ?>
-                    <p><?php esc_html_e('Text, captions, or words will be avoided in generated images (see plugin settings).', 'ai-featured-image-generator'); ?></p>
-                <?php else: ?>
-                    <p><?php esc_html_e('Text, captions, or words may appear in generated images (see plugin settings).', 'ai-featured-image-generator'); ?></p>
-                <?php endif; ?>
-            </div>
-
-            <!-- Custom text field (if enabled) -->
-            <?php if ($allow_text): ?>
-            <div class="aifi-field-group">
-                <label for="aifi-custom-text"><?php esc_html_e('Custom Text for Image (optional):', 'ai-featured-image-generator'); ?></label>
-                <input type="text" 
-                       id="aifi-custom-text" 
-                       class="widefat" 
-                       placeholder="<?php esc_attr_e('Add text to your image ...', 'ai-featured-image-generator'); ?>">
-                <p class="description"><?php esc_html_e('Leave empty to use the post title as text on the image.', 'ai-featured-image-generator'); ?></p>
-            </div>
+            <?php if (!$allow_text): ?>
+                <p style="color:#666;font-size:12px;"><em><?php esc_html_e('Text, captions, or words will be avoided in generated images (see plugin settings).', 'ai-featured-image-generator'); ?></em></p>
+            <?php else: ?>
+                <p style="color:#666;font-size:12px;"><em><?php esc_html_e('Text, captions, or words may appear in generated images (see plugin settings).', 'ai-featured-image-generator'); ?></em></p>
             <?php endif; ?>
 
-            <!-- Custom prompt field -->
-            <div class="aifi-field-group">
+            <p>
                 <label for="aifi-prompt"><?php esc_html_e('Custom Prompt (optional):', 'ai-featured-image-generator'); ?></label>
                 <textarea id="aifi-prompt" 
                           class="widefat" 
                           rows="3" 
                           placeholder="<?php esc_attr_e('Add details to your image prompt...', 'ai-featured-image-generator'); ?>"></textarea>
-            </div>
+            </p>
 
-            <!-- Style selection -->
-            <div class="aifi-field-group">
+            <p>
                 <label for="aifi-style"><?php esc_html_e('Style:', 'ai-featured-image-generator'); ?></label>
                 <select id="aifi-style" class="widefat">
-                    <option value="none" <?php selected($default_style, 'none'); ?>><?php esc_html_e('None (No Style)', 'ai-featured-image-generator'); ?></option>
                     <option value="realistic" <?php selected($default_style, 'realistic'); ?>><?php esc_html_e('Realistic', 'ai-featured-image-generator'); ?></option>
                     <option value="artistic" <?php selected($default_style, 'artistic'); ?>><?php esc_html_e('Artistic', 'ai-featured-image-generator'); ?></option>
                     <option value="cartoon" <?php selected($default_style, 'cartoon'); ?>><?php esc_html_e('Cartoon', 'ai-featured-image-generator'); ?></option>
@@ -149,9 +131,8 @@ class Meta_Box {
                     <option value="minimalist" <?php selected($default_style, 'minimalist'); ?>><?php esc_html_e('Minimalist', 'ai-featured-image-generator'); ?></option>
                     <option value="technicolor" <?php selected($default_style, 'technicolor'); ?>><?php esc_html_e('Technicolor', 'ai-featured-image-generator'); ?></option>
                 </select>
-            </div>
+            </p>
 
-            <!-- Generate button and loading spinner -->
             <div class="aifi-actions">
                 <button type="button" 
                         id="aifi-generate" 
@@ -198,7 +179,6 @@ class Meta_Box {
                 </div>
             </div>
 
-            <!-- Preview and message areas -->
             <div id="aifi-preview" class="aifi-preview" style="display: none;">
                 <img src="" alt="<?php esc_attr_e('Generated image preview', 'ai-featured-image-generator'); ?>">
             </div>

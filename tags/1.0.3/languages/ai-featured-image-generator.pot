@@ -137,7 +137,7 @@ msgid "Allow text, captions, or words to appear in generated images"
 msgstr ""
 
 #: inc/class-settings.php
-msgid "If checked, the AI will be instructed to add the specified text to the image. If unchecked, the AI will avoid adding any text, captions, or words."
+msgid "If unchecked, the AI will be instructed to avoid adding any text, captions, or words in the image."
 msgstr ""
 
 #: inc/class-meta-box.php

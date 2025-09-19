@@ -3,7 +3,7 @@ Contributors: Amr267
 Tags: featured image, ai, image generation, openai, gpt-4
 Requires at least: 5.8
 Tested up to: 6.8
-Stable tag: 1.1.0
+Stable tag: 1.0.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -98,18 +98,6 @@ The plugin supports 12 different artistic styles:
 
 == Changelog ==
 
-= 1.1.0 =
-* Improved UI for a smoother experience
-* Fixed bug that forced text on image when the option is selected
-* Replaced unfriendly error messages with user-friendly messages
-* Updated plugin logo from PNG to SVG
-* Added a "none" style option and set it as the default
-
-= 1.0.4 =
-* Added a loader spinner icon
-* Improved UI styling
-* Activated the feature on the Pages post type
-
 = 1.0.3 =
 * Added loader spinner icon
 * Improved UI
@@ -119,12 +107,6 @@ The plugin supports 12 different artistic styles:
 * Initial release
 
 == Upgrade Notice ==
-
-= 1.1.0 =
-Improved UI for a smoother experience, fixed bug that forced text on image when the option is selected, replaced unfriendly error messages with user-friendly messages, updated plugin logo from PNG to SVG, and added a "none" style option and set it as the default
-
-= 1.0.4 =
-Added a loader spinner icon, improved UI styling, and activated the feature on the Pages post type
 
 = 1.0.3 =
 Added loader spinner icon and improved UI

@@ -38,11 +38,6 @@ class REST {
                     'type' => 'string',
                     'sanitize_callback' => 'sanitize_text_field'
                 ),
-                'custom_text' => array(
-                    'required' => false,
-                    'type' => 'string',
-                    'sanitize_callback' => 'sanitize_text_field'
-                ),
                 'style' => array(
                     'required' => false,
                     'type' => 'string',
@@ -88,7 +83,6 @@ class REST {
         $post_id = $request['post_id'];
         $title = $request['title'];
         $prompt = $request['prompt'];
-        $custom_text = $request['custom_text'];
         $style = $request['style'];
 
         // Check for transient lock
@@ -118,7 +112,7 @@ class REST {
 
         // Generate image
         $generator = new Generator($settings);
-        $result = $generator->generate_image($post_id, $prompt, $style, $title, $custom_text);
+        $result = $generator->generate_image($post_id, $prompt, $style, $title);
 
         if (is_wp_error($result)) {
             return $result;
