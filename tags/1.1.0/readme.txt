@@ -1,5 +1,6 @@
 === AI Featured Image Generator ===
 Contributors: Amr267
+Donate link: https://buymeacoffee.com/unclegold
 Tags: featured image, ai, image generation, openai, gpt-4
 Requires at least: 5.8
 Tested up to: 6.8.3
