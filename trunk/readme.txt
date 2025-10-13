@@ -2,7 +2,7 @@
 Contributors: Amr267
 Tags: featured image, ai, image generation, openai, dall-e
 Requires at least: 5.8
-Tested up to: 6.8.1
+Tested up to: 6.8.3
 Stable tag: 1.1.0
 Requires PHP: 7.4
 License: GPLv2 or later
