@@ -8,7 +8,7 @@ Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Generate AI-powered featured images for your WordPress posts using OpenAI's Image Generation API (gpt-image-1).
+Generate AI-powered featured images for your WordPress posts using OpenAI Models.
 
 == Description ==
 
@@ -16,7 +16,7 @@ AI Featured Image Generator is a WordPress plugin that adds a "Generate Featured
 
 = Features =
 
-* Generate featured images using OpenAI's Image Generation API (gpt-image-1 model)
+* Generate featured images using OpenAI Models
 * Custom prompt input for fine-tuning image generation
 * Multiple style presets (Realistic, Artistic, Cartoon, Sketch, Watercolor, 3D Render, Pixel Art, Cyberpunk, Fantasy, Anime, Minimalist, Technicolor)
 * Configurable image sizes (Square, Portrait, Landscape, Wide)
@@ -68,7 +68,7 @@ The plugin itself is free, but you'll need to pay for API usage according to Ope
 
 = Can I use a different AI image API? =
 
-Currently, the plugin only supports OpenAI's Image Generation API (gpt-image-1 model). Support for other APIs may be added in future versions.
+Currently, the plugin only supports OpenAI Models. Support for other AI providers may be added in future versions.
 
 = Is there a limit to how many images I can generate? =
 
