@@ -192,7 +192,7 @@ class Settings {
      */
     public function render_size_field() {
         $settings = $this->get_settings();
-        $size = isset($settings['default_size']) ? $settings['default_size'] : '1536x1024';
+        $size = isset($settings['default_size']) ? $settings['default_size'] : '1024x1024';
         
         // Sizes for GPT-4 Vision
         $sizes = array(
