@@ -231,7 +231,7 @@ class Generator {
         require_once(ABSPATH . 'wp-admin/includes/file.php');
         
         $api_url = 'https://api.openai.com/v1/images/generations';
-        $size = isset($settings['default_size']) ? $settings['default_size'] : '1536x1024';
+        $size = isset($settings['default_size']) ? $settings['default_size'] : '1024x1024';
 
         $output_format = isset($settings['output_format']) ? $settings['output_format'] : 'webp';
         $quality = $quality !== null ? intval($quality) : (isset($settings['image_quality']) ? intval($settings['image_quality']) : 90);

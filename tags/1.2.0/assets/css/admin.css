@@ -264,9 +264,104 @@
     width: 200px;
 }
 
+/* Buy Me a Coffee Widget */
+.aifi-coffee-widget {
+    margin-top: 30px;
+    padding: 20px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.aifi-coffee-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.aifi-coffee-text h3 {
+    margin: 0 0 8px 0;
+    color: #2c3e50;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.aifi-coffee-text p {
+    margin: 0;
+    color: #6c757d;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.aifi-coffee-button {
+    flex-shrink: 0;
+}
+
+.aifi-buy-coffee-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+    color: #fff !important;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.aifi-buy-coffee-btn:hover {
+    background: linear-gradient(135deg, #e55a2b 0%, #e0841a 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 107, 53, 0.4);
+    color: #fff !important;
+    text-decoration: none;
+}
+
+.aifi-buy-coffee-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.3);
+    color: #fff !important;
+}
+
+.aifi-coffee-icon {
+    font-size: 16px;
+    animation: coffee-pulse 2s infinite;
+}
+
+@keyframes coffee-pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
 /* Responsive adjustments */
 @media screen and (max-width: 782px) {
     .aifi-settings-section .form-table th {
         width: auto;
+    }
+    
+    .aifi-coffee-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .aifi-coffee-text h3 {
+        font-size: 16px;
+    }
+    
+    .aifi-buy-coffee-btn {
+        padding: 10px 16px;
+        font-size: 13px;
     }
 } 
