@@ -27,14 +27,20 @@ class Meta_Box {
      * Add meta box to post editor.
      */
     public function add_meta_box() {
-        add_meta_box(
-            'aifi_meta_box',
-            __('AI Featured Image Generator', 'ai-featured-image-generator'),
-            array($this, 'render_meta_box'),
-            array('post', 'page'),
-            'side',
-            'high'
-        );
+        // Get supported post types
+        $post_types = array('post', 'page');
+        
+        // Add meta box for each supported post type
+        foreach ($post_types as $post_type) {
+            add_meta_box(
+                'aifi_meta_box',
+                __('AI Featured Image Generator', 'ai-featured-image-generator'),
+                array($this, 'render_meta_box'),
+                $post_type,
+                'side',
+                'high'
+            );
+        }
     }
 
     /**
@@ -43,8 +49,20 @@ class Meta_Box {
      * @param string $hook Current admin page.
      */
     public function enqueue_scripts($hook) {
+        // Check if we're on a post/page edit screen (compatible with both editors)
         if (!in_array($hook, array('post.php', 'post-new.php', 'page.php', 'page-new.php'))) {
             return;
+        }
+        
+        // Also check if we're in Classic Editor mode
+        $is_classic_editor = false;
+        if (function_exists('classic_editor_replace') && classic_editor_replace()) {
+            $is_classic_editor = true;
+        }
+        
+        // Check for Classic Editor plugin
+        if (class_exists('Classic_Editor')) {
+            $is_classic_editor = true;
         }
 
         wp_enqueue_style(
@@ -65,6 +83,7 @@ class Meta_Box {
         wp_localize_script('aifi-admin', 'aifiData', array(
             'nonce' => wp_create_nonce('wp_rest'),
             'restUrl' => rest_url('aifi/v1/generate'),
+            'isClassicEditor' => $is_classic_editor,
             'i18n' => array(
                 'generating' => __('Generating image...', 'ai-featured-image-generator'),
                 'success' => __('Image generated successfully!', 'ai-featured-image-generator'),

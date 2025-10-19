@@ -25,7 +25,25 @@
 
         // Get post ID from the page
         const postId = $('#post_ID').val();
-        const postTitle = $('h1:nth(1)').text().replace("· Post","");
+        
+        // Get post title - compatible with both Classic Editor and Block Editor
+        let postTitle = '';
+        
+        // Try Classic Editor first (title field)
+        const titleField = $('#title');
+        if (titleField.length && titleField.val()) {
+            postTitle = titleField.val();
+        } else {
+            // Fallback to Block Editor method
+            const titleFromH1 = $('h1:nth(1)').text().replace("· Post","");
+            if (titleFromH1 && titleFromH1.trim()) {
+                postTitle = titleFromH1;
+            } else {
+                // Try alternative selectors for different editor versions
+                const altTitle = $('.editor-post-title__input').val() || $('.wp-block-post-title input').val() || '';
+                postTitle = altTitle;
+            }
+        }
 
         // Prepare request data
         const data = {
@@ -63,8 +81,32 @@
                         .show();
 
                     // Update featured image in the editor
-                    if (wp.media && wp.media.featuredImage) {
-                        wp.media.featuredImage.set(response.attachment_id);
+                    if (aifiData.isClassicEditor) {
+                        // Classic Editor: Set featured image using traditional method
+                        $('#_thumbnail_id').val(response.attachment_id);
+                        
+                        // Update the featured image display in Classic Editor
+                        const featuredImageContainer = $('#postimagediv');
+                        if (featuredImageContainer.length) {
+                            // Remove existing image if any
+                            featuredImageContainer.find('.inside img').remove();
+                            
+                            // Add new image
+                            const imgElement = $('<img>').attr({
+                                'src': response.url,
+                                'style': 'max-width: 100%; height: auto;'
+                            });
+                            
+                            featuredImageContainer.find('.inside').prepend(imgElement);
+                            
+                            // Show the "Remove featured image" link if hidden
+                            featuredImageContainer.find('.remove-post-thumbnail').show();
+                        }
+                    } else {
+                        // Block Editor: Use wp.media method
+                        if (wp.media && wp.media.featuredImage) {
+                            wp.media.featuredImage.set(response.attachment_id);
+                        }
                     }
                 } else {
                     showError(response.message || aifiData.i18n.error);

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: AI Featured Image Generator
  * Description: Generate AI-powered featured images for your WordPress posts and pages using AI image APIs.
- * Version: 1.2.0
+ * Version: 1.2.1
  * Author: Amr AI
  * Author URI: https://www.linkedin.com/in/amr-issa/
  * License: GPL v2 or later
@@ -21,7 +21,7 @@ if (!defined('WPINC')) {
 }
 
 // Plugin version
-define('AIFI_VERSION', '1.2.0');
+define('AIFI_VERSION', '1.2.1');
 define('AIFI_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('AIFI_PLUGIN_URL', plugin_dir_url(__FILE__));
 

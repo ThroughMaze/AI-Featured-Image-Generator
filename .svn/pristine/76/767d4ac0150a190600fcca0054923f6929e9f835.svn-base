@@ -1,0 +1,367 @@
+/* Main metabox container */
+.aifi-meta-box {
+    padding: 0;
+    background: transparent;
+    border: none;
+}
+
+/* Info notice styling */
+.aifi-info-notice {
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    background: #f0f6fc;
+    border: 1px solid #c3d4e6;
+    border-left: 4px solid #0073aa;
+    border-radius: 4px;
+}
+
+.aifi-info-notice p {
+    margin: 0;
+    color: #50575e;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+/* Field group containers */
+.aifi-field-group {
+    margin-bottom: 20px;
+}
+
+.aifi-field-group:last-of-type {
+    margin-bottom: 24px;
+}
+
+/* Label styling */
+.aifi-field-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #1d2327;
+    font-size: 13px;
+    line-height: 1.3;
+}
+
+/* Form input styling */
+.aifi-field-group input[type="text"],
+.aifi-field-group textarea,
+.aifi-field-group select {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid #8c8f94;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.4;
+    background: #fff;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/* Quality control styling */
+.aifi-quality-control {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.aifi-field-group input[type="range"] {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: #ddd;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+.aifi-field-group input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #0073aa;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 115, 170, 0.3);
+    transition: all 0.2s ease;
+}
+
+.aifi-field-group input[type="range"]::-webkit-slider-thumb:hover {
+    background: #005a87;
+    transform: scale(1.1);
+}
+
+.aifi-field-group input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #0073aa;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 115, 170, 0.3);
+    transition: all 0.2s ease;
+}
+
+.aifi-field-group input[type="range"]::-moz-range-thumb:hover {
+    background: #005a87;
+    transform: scale(1.1);
+}
+
+.aifi-quality-display {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #50575e;
+}
+
+.aifi-quality-display #aifi-quality-value {
+    font-weight: 600;
+    color: #0073aa;
+    font-size: 14px;
+}
+
+.aifi-quality-label {
+    color: #646970;
+    font-size: 12px;
+}
+
+/* Select dropdown arrow styling */
+.aifi-field-group select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+.aifi-field-group input[type="text"]:focus,
+.aifi-field-group textarea:focus,
+.aifi-field-group select:focus {
+    border-color: #0073aa;
+    outline: none;
+    box-shadow: 0 0 0 1px #0073aa;
+}
+
+.aifi-field-group select.widefat {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+
+/* Description text */
+.aifi-field-group .description {
+    margin: 6px 0 0 0;
+    color: #646970;
+    font-size: 12px;
+    line-height: 1.4;
+    font-style: italic;
+}
+
+/* Actions container */
+.aifi-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 24px 0 20px 0;
+    padding: 0;
+}
+
+.aifi-actions .spinner {
+    float: none;
+    margin: 0 0 0 8px;
+}
+
+/* Button styling (keeping existing) */
+.aifi-meta-box .button-primary {
+    background: linear-gradient(135deg, #0073aa 0%, #005a87 100%);
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-weight: 600;
+    text-shadow: none;
+    box-shadow: 0 2px 4px rgba(0, 115, 170, 0.2);
+    transition: all 0.2s ease;
+}
+
+.aifi-meta-box .button-primary:hover {
+    background: linear-gradient(135deg, #005a87 0%, #004a73 100%);
+    box-shadow: 0 4px 8px rgba(0, 115, 170, 0.3);
+    transform: translateY(-1px);
+}
+
+/* Loading spinner (keeping existing) */
+.aifi-loading-spinner {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Preview area */
+.aifi-preview {
+    margin: 20px 0 0 0;
+    text-align: center;
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    padding: 16px;
+}
+
+.aifi-preview img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Message styling */
+.aifi-message {
+    margin: 16px 0 0 0;
+    padding: 12px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+.aifi-message.success {
+    background-color: #dff0d8;
+    border: 1px solid #d6e9c6;
+    color: #3c763d;
+}
+
+.aifi-message.error {
+    background-color: #f2dede;
+    border: 1px solid #ebccd1;
+    color: #a94442;
+}
+
+/* Error styling */
+.aifi-error {
+    color: #dc3232;
+    font-weight: 600;
+}
+
+/* Settings page styles */
+.aifi-settings-section {
+    margin: 20px 0;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #ccd0d4;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+}
+
+.aifi-settings-section h2 {
+    margin-top: 0;
+}
+
+.aifi-settings-section .form-table th {
+    width: 200px;
+}
+
+/* Buy Me a Coffee Widget */
+.aifi-coffee-widget {
+    margin-top: 30px;
+    padding: 20px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.aifi-coffee-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.aifi-coffee-text h3 {
+    margin: 0 0 8px 0;
+    color: #2c3e50;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.aifi-coffee-text p {
+    margin: 0;
+    color: #6c757d;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.aifi-coffee-button {
+    flex-shrink: 0;
+}
+
+.aifi-buy-coffee-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+    color: #fff !important;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.aifi-buy-coffee-btn:hover {
+    background: linear-gradient(135deg, #e55a2b 0%, #e0841a 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 107, 53, 0.4);
+    color: #fff !important;
+    text-decoration: none;
+}
+
+.aifi-buy-coffee-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.3);
+    color: #fff !important;
+}
+
+.aifi-coffee-icon {
+    font-size: 16px;
+    animation: coffee-pulse 2s infinite;
+}
+
+@keyframes coffee-pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 782px) {
+    .aifi-settings-section .form-table th {
+        width: auto;
+    }
+    
+    .aifi-coffee-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .aifi-coffee-text h3 {
+        font-size: 16px;
+    }
+    
+    .aifi-buy-coffee-btn {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+} 

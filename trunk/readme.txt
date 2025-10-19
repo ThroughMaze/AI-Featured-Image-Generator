@@ -4,7 +4,7 @@ Donate link: https://buymeacoffee.com/unclegold
 Tags: featured image, ai, image generation, openai, gpt-4
 Requires at least: 5.8
 Tested up to: 6.8.3
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -124,6 +124,11 @@ The plugin supports two OpenAI models:
 
 == Changelog ==
 
+= 1.2.1 =
+* Fixed compatibility issue with Classic Editor plugin
+* Improved JavaScript functionality for better editor support
+* Enhanced meta box rendering for classic editor compatibility
+
 = 1.2.0 =
 * Added output format selection (WebP, PNG, JPEG) with WebP as default
 * Added image quality control (1-100) for both global settings and individual posts/pages
@@ -155,6 +160,9 @@ The plugin supports two OpenAI models:
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.2.1 =
+Bug fix release: Fixed compatibility issue with Classic Editor plugin and improved JavaScript functionality for better editor support.
 
 = 1.2.0 =
 Major update with new features: output format selection (WebP, PNG, JPEG), image quality control (1-100) for both global and per-post settings, AI model selection (GPT Image 1 vs GPT Image 1 Mini), updated image sizes, enhanced UI with quality sliders, and improved API integration
