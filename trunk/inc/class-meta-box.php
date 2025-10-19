@@ -87,6 +87,7 @@ class Meta_Box {
         $settings_data = $this->settings->get_settings();
         $default_style = isset($settings_data['default_style']) ? $settings_data['default_style'] : 'realistic';
         $allow_text = isset($settings_data['allow_text']) ? (bool)$settings_data['allow_text'] : false;
+        $default_quality = isset($settings_data['image_quality']) ? intval($settings_data['image_quality']) : 90;
 
         if (empty($settings_data['api_key'])) {
             printf(
@@ -149,6 +150,25 @@ class Meta_Box {
                     <option value="minimalist" <?php selected($default_style, 'minimalist'); ?>><?php esc_html_e('Minimalist', 'ai-featured-image-generator'); ?></option>
                     <option value="technicolor" <?php selected($default_style, 'technicolor'); ?>><?php esc_html_e('Technicolor', 'ai-featured-image-generator'); ?></option>
                 </select>
+            </div>
+
+            <!-- Quality control -->
+            <div class="aifi-field-group">
+                <label for="aifi-quality"><?php esc_html_e('Quality:', 'ai-featured-image-generator'); ?></label>
+                <div class="aifi-quality-control">
+                    <input type="range" 
+                           id="aifi-quality" 
+                           class="widefat" 
+                           min="1" 
+                           max="100" 
+                           value="<?php echo esc_attr($default_quality); ?>"
+                           oninput="document.getElementById('aifi-quality-value').textContent = this.value">
+                    <div class="aifi-quality-display">
+                        <span id="aifi-quality-value"><?php echo esc_html($default_quality); ?></span>
+                        <span class="aifi-quality-label"><?php esc_html_e('(1-100)', 'ai-featured-image-generator'); ?></span>
+                    </div>
+                </div>
+                <p class="description"><?php esc_html_e('Higher quality produces larger file sizes.', 'ai-featured-image-generator'); ?></p>
             </div>
 
             <!-- Generate button and loading spinner -->

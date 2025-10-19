@@ -4,12 +4,12 @@ Donate link: https://buymeacoffee.com/unclegold
 Tags: featured image, ai, image generation, openai, gpt-4
 Requires at least: 5.8
 Tested up to: 6.8.3
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Generate AI-powered featured images for your WordPress posts using OpenAI Models.
+Generate AI-powered featured images for your WordPress posts & pages using OpenAI Models.
 
 == Description ==
 
@@ -17,10 +17,13 @@ AI Featured Image Generator is a WordPress plugin that adds a "Generate Featured
 
 = Features =
 
-* Generate featured images using OpenAI Models
+* Generate featured images using OpenAI Models (GPT Image 1 & GPT Image 1 Mini)
 * Custom prompt input for fine-tuning image generation
 * Multiple style presets (Realistic, Artistic, Cartoon, Sketch, Watercolor, 3D Render, Pixel Art, Cyberpunk, Fantasy, Anime, Minimalist, Technicolor)
-* Configurable image sizes (Square, Portrait, Landscape, Wide)
+* Configurable image sizes (Square, Portrait, Landscape)
+* Output format selection (WebP, PNG, JPEG) with WebP as default
+* Image quality control (1-100) for both global settings and individual posts/pages
+* AI model selection (GPT Image 1 Standard or GPT Image 1 Mini for faster/cheaper generation)
 * Works with both Gutenberg and Classic editors
 * Multisite support
 * Translation ready
@@ -78,6 +81,7 @@ The limit depends on your OpenAI API plan and quota. The plugin generates one im
 = What styles are available? =
 
 The plugin supports 12 different artistic styles:
+- None: No specific style applied
 - Realistic: Photographic, lifelike images
 - Artistic: Painterly, artistic interpretations
 - Cartoon: Animated, cartoon-style images
@@ -91,13 +95,44 @@ The plugin supports 12 different artistic styles:
 - Minimalist: Clean, minimalist designs
 - Technicolor: Vivid, colorful technicolor style
 
+= What output formats are supported? =
+
+The plugin supports three output formats:
+- WebP (Default): Best compression and quality balance
+- PNG: Lossless format, good for graphics with sharp edges
+- JPEG: Widely compatible, good for photographs
+
+= How does quality control work? =
+
+You can control image quality from 1 (lowest) to 100 (highest):
+- Global setting: Set default quality in Settings → AI Featured Image
+- Per-post control: Override quality for individual post/pages in the metabox
+- Higher quality produces larger file sizes but better image detail
+- Default quality is set to 90 for optimal balance
+
+= What AI models are available? =
+
+The plugin supports two OpenAI models:
+- GPT Image 1 (Standard): Default model with consistent, high-quality results
+- GPT Image 1 Mini: Faster and more cost-effective, may produce slightly different results
+
 == Screenshots ==
 
 1. Settings page
-2. Post editor meta box
+2. Post/page editor meta box
 3. Generated image preview
 
 == Changelog ==
+
+= 1.2.0 =
+* Added output format selection (WebP, PNG, JPEG) with WebP as default
+* Added image quality control (1-100) for both global settings and individual posts/pages
+* Added AI model selection (GPT Image 1 Standard vs GPT Image 1 Mini)
+* Updated image sizes to support current OpenAI API specifications
+* Enhanced settings page with new quality and model controls
+* Improved metabox with quality slider and real-time value display
+* Added comprehensive CSS styling for quality controls
+* Updated API integration to use quality and model parameters
 
 = 1.1.0 =
 * Improved UI for a smoother experience
@@ -120,6 +155,9 @@ The plugin supports 12 different artistic styles:
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.2.0 =
+Major update with new features: output format selection (WebP, PNG, JPEG), image quality control (1-100) for both global and per-post settings, AI model selection (GPT Image 1 vs GPT Image 1 Mini), updated image sizes, enhanced UI with quality sliders, and improved API integration
 
 = 1.1.0 =
 Improved UI for a smoother experience, fixed bug that forced text on image when the option is selected, replaced unfriendly error messages with user-friendly messages, updated plugin logo from PNG to SVG, and added a "none" style option and set it as the default

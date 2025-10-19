@@ -6,6 +6,7 @@
     const $promptInput = $('#aifi-prompt');
     const $customTextInput = $('#aifi-custom-text');
     const $styleSelect = $('#aifi-style');
+    const $qualityInput = $('#aifi-quality');
     const $preview = $('#aifi-preview');
     const $message = $('#aifi-message');
     const $spinner = $('.aifi-actions .spinner');
@@ -32,7 +33,8 @@
             title: postTitle,
             prompt: $promptInput.val(),
             custom_text: $customTextInput.val(),
-            style: $styleSelect.val()
+            style: $styleSelect.val(),
+            quality: parseInt($qualityInput.val())
         };
 
         // Make API request

@@ -47,6 +47,14 @@ class REST {
                     'required' => false,
                     'type' => 'string',
                     'sanitize_callback' => 'sanitize_text_field'
+                ),
+                'quality' => array(
+                    'required' => false,
+                    'type' => 'integer',
+                    'sanitize_callback' => function($value) {
+                        $quality = intval($value);
+                        return max(1, min(100, $quality)); // Ensure quality is between 1 and 100
+                    }
                 )
             )
         ));
@@ -90,6 +98,7 @@ class REST {
         $prompt = $request['prompt'];
         $custom_text = $request['custom_text'];
         $style = $request['style'];
+        $quality = $request['quality'];
 
         // Check for transient lock
         $lock_key = 'aifi_lock_' . $post_id;
@@ -118,7 +127,7 @@ class REST {
 
         // Generate image
         $generator = new Generator($settings);
-        $result = $generator->generate_image($post_id, $prompt, $style, $title, $custom_text);
+        $result = $generator->generate_image($post_id, $prompt, $style, $title, $custom_text, $quality);
 
         if (is_wp_error($result)) {
             return $result;

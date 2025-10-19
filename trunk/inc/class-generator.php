@@ -29,9 +29,10 @@ class Generator {
      * @param string $style   Optional style override.
      * @param string $title   Optional custom title.
      * @param string $custom_text Optional custom text for image.
+     * @param int    $quality Optional quality override.
      * @return int|\WP_Error Attachment ID on success, WP_Error on failure.
      */
-    public function generate_image($post_id, $prompt = '', $style = '', $title = '', $custom_text = '') {
+    public function generate_image($post_id, $prompt = '', $style = '', $title = '', $custom_text = '', $quality = null) {
         $settings = $this->settings->get_settings();
 
         $post = get_post($post_id);
@@ -71,9 +72,9 @@ class Generator {
     
         // Allow filtering the prompt
         $final_prompt = apply_filters('aifi_build_prompt', $final_prompt, $post, $style);
-        
+   
         // Call AI API
-        $image_data = $this->call_ai_api($final_prompt, $settings);
+        $image_data = $this->call_ai_api($final_prompt, $settings, $quality);
         if (is_wp_error($image_data)) {
             return $image_data;
         }
@@ -223,24 +224,32 @@ class Generator {
      *
      * @param string $prompt   Image prompt.
      * @param array  $settings Plugin settings.
+     * @param int    $quality  Optional quality override.
      * @return string|\WP_Error Image data on success, WP_Error on failure.
      */
-    private function call_ai_api($prompt, $settings) {
+    private function call_ai_api($prompt, $settings, $quality = null) {
         require_once(ABSPATH . 'wp-admin/includes/file.php');
         
         $api_url = 'https://api.openai.com/v1/images/generations';
         $size = isset($settings['default_size']) ? $settings['default_size'] : '1024x1024';
 
+        $output_format = isset($settings['output_format']) ? $settings['output_format'] : 'webp';
+        $quality = $quality !== null ? intval($quality) : (isset($settings['image_quality']) ? intval($settings['image_quality']) : 90);
+        
+        $model = isset($settings['ai_model']) ? $settings['ai_model'] : 'gpt-image-1';
+        
         $args = array(
             'headers' => array(
                 'Authorization' => 'Bearer ' . $settings['api_key'],
                 'Content-Type' => 'application/json'
             ),
             'body' => json_encode(array(
-                'model' => 'gpt-image-1',
+                'model' => $model,
                 'prompt' => $prompt,
                 'n' => 1,
-                'size' => $size
+                'size' => $size,
+                'output_format' => $output_format,
+                'output_compression' => $quality
             )),
             'timeout' => 240,
             'httpversion' => '1.1',
@@ -360,8 +369,13 @@ class Generator {
             }
         }
 
+        // Get the output format from settings to determine file extension
+        $settings = $this->settings->get_settings();
+        $output_format = isset($settings['output_format']) ? $settings['output_format'] : 'webp';
+        $extension = $output_format === 'jpeg' ? 'jpg' : $output_format;
+        
         $file_array = array(
-            'name' => 'ai-generated-' . $post_id . '.png',
+            'name' => 'ai-generated-' . $post_id . '.' . $extension,
             'tmp_name' => $temp_file
         );
 

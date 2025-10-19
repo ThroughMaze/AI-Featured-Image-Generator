@@ -92,6 +92,33 @@ class Settings {
             $this->page,
             'aifi_main_section'
         );
+
+        // Output Format
+        add_settings_field(
+            'output_format',
+            __('Output Format', 'ai-featured-image-generator'),
+            array($this, 'render_output_format_field'),
+            $this->page,
+            'aifi_main_section'
+        );
+
+        // Image Quality
+        add_settings_field(
+            'image_quality',
+            __('Image Quality', 'ai-featured-image-generator'),
+            array($this, 'render_quality_field'),
+            $this->page,
+            'aifi_main_section'
+        );
+
+        // AI Model
+        add_settings_field(
+            'ai_model',
+            __('AI Model', 'ai-featured-image-generator'),
+            array($this, 'render_model_field'),
+            $this->page,
+            'aifi_main_section'
+        );
     }
 
     /**
@@ -111,6 +138,22 @@ class Settings {
                 submit_button();
                 ?>
             </form>
+            
+            <!-- Buy Me a Coffee Widget -->
+            <div class="aifi-coffee-widget">
+                <div class="aifi-coffee-content">
+                    <div class="aifi-coffee-text">
+                        <h3><?php esc_html_e('Appreciate this plugin?', 'ai-featured-image-generator'); ?></h3>
+                        <p><?php esc_html_e('Every cup of coffee fuels the passion behind this plugin. Your support means the world to me and helps me continue creating amazing features!', 'ai-featured-image-generator'); ?></p>
+                    </div>
+                    <div class="aifi-coffee-button">
+                        <a href="https://buymeacoffee.com/unclegold" target="_blank" rel="noopener" class="aifi-buy-coffee-btn">
+                            <span class="aifi-coffee-icon">☕</span>
+                            <?php esc_html_e('Buy me a coffee', 'ai-featured-image-generator'); ?>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
         <?php
     }
@@ -154,9 +197,8 @@ class Settings {
         // Sizes for GPT-4 Vision
         $sizes = array(
             '1024x1024' => '1024x1024 (Square)',
-            '1024x1792' => '1024x1792 (Portrait)',
-            '1792x1024' => '1792x1024 (Landscape)',
-            '1536x1024' => '1536x1024 (Wide)'
+            '1024x1536' => '1024x1536 (Portrait)',
+            '1536x1024' => '1536x1024 (Landscape)'
         );
         ?>
         <select name="<?php echo esc_attr($this->option); ?>[default_size]">
@@ -217,6 +259,73 @@ class Settings {
     }
 
     /**
+     * Render output format field.
+     */
+    public function render_output_format_field() {
+        $settings = $this->get_settings();
+        $output_format = isset($settings['output_format']) ? $settings['output_format'] : 'webp';
+        
+        $formats = array(
+            'webp' => 'WebP (Recommended)',
+            'png' => 'PNG',
+            'jpeg' => 'JPEG'
+        );
+        ?>
+        <select name="<?php echo esc_attr($this->option); ?>[output_format]">
+            <?php foreach ($formats as $value => $label) : ?>
+                <option value="<?php echo esc_attr($value); ?>" <?php selected($output_format, $value); ?>>
+                    <?php echo esc_html($label); ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+        <p class="description"><?php esc_html_e('Choose the output format for generated images. WebP provides the best compression and quality.', 'ai-featured-image-generator'); ?></p>
+        <?php
+    }
+
+    /**
+     * Render quality field.
+     */
+    public function render_quality_field() {
+        $settings = $this->get_settings();
+        $quality = isset($settings['image_quality']) ? intval($settings['image_quality']) : 90;
+        ?>
+        <input type="range" 
+               name="<?php echo esc_attr($this->option); ?>[image_quality]" 
+               value="<?php echo esc_attr($quality); ?>" 
+               min="1" 
+               max="100" 
+               class="regular-text"
+               id="aifi-quality-slider"
+               oninput="document.getElementById('aifi-quality-value').textContent = this.value">
+        <span id="aifi-quality-value"><?php echo esc_html($quality); ?></span>
+        <p class="description"><?php esc_html_e('Choose image quality from 1 to 100. Higher quality means larger files, while lower quality creates smaller files and reduces costs.', 'ai-featured-image-generator'); ?></p>
+        <?php
+    }
+
+    /**
+     * Render model field.
+     */
+    public function render_model_field() {
+        $settings = $this->get_settings();
+        $model = isset($settings['ai_model']) ? $settings['ai_model'] : 'gpt-image-1';
+        
+        $models = array(
+            'gpt-image-1' => 'GPT Image 1 (Standard)',
+            'gpt-image-1-mini' => 'GPT Image 1 Mini (Cheaper)'
+        );
+        ?>
+        <select name="<?php echo esc_attr($this->option); ?>[ai_model]">
+            <?php foreach ($models as $value => $label) : ?>
+                <option value="<?php echo esc_attr($value); ?>" <?php selected($model, $value); ?>>
+                    <?php echo esc_html($label); ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+        <p class="description"><?php esc_html_e('Choose the AI model for image generation. GPT Image 1 Mini is faster but may produce slightly different results.', 'ai-featured-image-generator'); ?></p>
+        <?php
+    }
+
+    /**
      * Sanitize settings.
      *
      * @param array $input Settings input.
@@ -239,6 +348,21 @@ class Settings {
 
         if (isset($input['allow_text'])) {
             $sanitized['allow_text'] = $input['allow_text'] ? 1 : 0;
+        }
+
+        if (isset($input['output_format'])) {
+            $allowed_formats = array('webp', 'png', 'jpeg');
+            $sanitized['output_format'] = in_array($input['output_format'], $allowed_formats) ? $input['output_format'] : 'webp';
+        }
+
+        if (isset($input['image_quality'])) {
+            $quality = intval($input['image_quality']);
+            $sanitized['image_quality'] = max(1, min(100, $quality)); // Ensure quality is between 1 and 100
+        }
+
+        if (isset($input['ai_model'])) {
+            $allowed_models = array('gpt-image-1', 'gpt-image-1-mini');
+            $sanitized['ai_model'] = in_array($input['ai_model'], $allowed_models) ? $input['ai_model'] : 'gpt-image-1';
         }
 
         return $sanitized;
