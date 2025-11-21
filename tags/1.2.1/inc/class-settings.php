@@ -143,7 +143,7 @@ class Settings {
             <div class="aifi-coffee-widget">
                 <div class="aifi-coffee-content">
                     <div class="aifi-coffee-text">
-                        <h3><?php esc_html_e('Appreciate this plugin?', 'ai-featured-image-generator'); ?></h3>
+                        <h3><?php esc_html_e('Enjoying the plugin?', 'ai-featured-image-generator'); ?></h3>
                         <p><?php esc_html_e('Every cup of coffee fuels the passion behind this plugin. Your support means the world to me and helps me continue creating amazing features!', 'ai-featured-image-generator'); ?></p>
                     </div>
                     <div class="aifi-coffee-button">
