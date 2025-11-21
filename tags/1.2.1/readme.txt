@@ -17,7 +17,7 @@ AI Featured Image Generator is a WordPress plugin that adds a "Generate Featured
 
 = Features =
 
-* Generate featured images using OpenAI Models (GPT Image 1 & GPT Image 1 Mini)
+* Generate featured images using OpenAI Models (GPT Image 1 and GPT Image 1 Mini)
 * Custom prompt input for fine-tuning image generation
 * Multiple style presets (Realistic, Artistic, Cartoon, Sketch, Watercolor, 3D Render, Pixel Art, Cyberpunk, Fantasy, Anime, Minimalist, Technicolor)
 * Configurable image sizes (Square, Portrait, Landscape)
