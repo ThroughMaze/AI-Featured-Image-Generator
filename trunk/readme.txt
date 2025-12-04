@@ -3,7 +3,7 @@ Contributors: Amr267
 Donate link: https://buymeacoffee.com/unclegold
 Tags: featured image, ai, image generation, openai, gpt-4
 Requires at least: 5.8
-Tested up to: 6.8.3
+Tested up to: 6.9
 Stable tag: 1.2.1
 Requires PHP: 7.4
 License: GPLv2 or later
